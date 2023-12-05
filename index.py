@@ -4,9 +4,11 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
 import requests
+import os
 API_VERSION = 'v3'
 API_SERVICE_NAME = 'calendar'
-CLIENT_SECRETS_FILE = "credentials.json"
+# CLIENT_SECRETS_FILE = "credentials.json"
+CLIENT_SECRET = os.environ['CLIENT_SECRET']
 SCOPES = [
     'https://www.googleapis.com/auth/calendar'
 ]
@@ -74,9 +76,28 @@ def authorize():
       return redirect("/?e=4")
 
     # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-    flow = Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE, scopes=SCOPES,
-        redirect_uri=url_for('oauth2callback', _external=True)
+    # flow = Flow.from_client_secrets_file(
+    #     CLIENT_SECRETS_FILE, scopes=SCOPES,
+    #     redirect_uri=url_for('oauth2callback', _external=True)
+    # )
+
+    flow = Flow.from_client_config(
+        {
+  "web": {
+    "client_id": "622606164667-6tlp0brae4cftg99tt4abo9lkbqdhe6h.apps.googleusercontent.com",
+    "project_id": "disco-order-257122",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": CLIENT_SECRET,
+    "redirect_uris": [
+      "http://webreg2cal-jacksawolf.vercel.app//oauth2callback",
+      "https://webreg2cal-jacksawolf.vercel.app/oauth2callback",
+      "http://localhost:5000/oauth2callback",
+      "https://localhost:5000/oauth2callback"
+    ]
+  }
+}, scopes=SCOPES, redirect_uri=url_for('oauth2callback', _external=True) 
     )
 
 
@@ -117,12 +138,29 @@ def oauth2callback():
   # verified in the authorization server response.
   state = session['state']
 
-  flow = Flow.from_client_secrets_file(
-      CLIENT_SECRETS_FILE,
-      scopes=None,        state=state,
-      redirect_uri=url_for('oauth2callback', _external=True)
-  )
-
+#   flow = Flow.from_client_secrets_file(
+#       CLIENT_SECRETS_FILE,
+#       scopes=None,        state=state,
+#       redirect_uri=url_for('oauth2callback', _external=True)
+#   )
+  flow = Flow.from_client_config(
+{
+    "web": {
+    "client_id": "622606164667-6tlp0brae4cftg99tt4abo9lkbqdhe6h.apps.googleusercontent.com",
+    "project_id": "disco-order-257122",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": CLIENT_SECRET,
+    "redirect_uris": [
+      "http://webreg2cal-jacksawolf.vercel.app//oauth2callback",
+      "https://webreg2cal-jacksawolf.vercel.app/oauth2callback",
+      "http://localhost:5000/oauth2callback",
+      "https://localhost:5000/oauth2callback"
+    ]
+  }
+}, scopes=SCOPES, redirect_uri=url_for('oauth2callback', _external=True) 
+    )
 
 
   # Use the authorization server's response to fetch the OAuth 2.0 tokens.
