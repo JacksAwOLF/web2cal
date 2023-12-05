@@ -91,10 +91,9 @@ def authorize():
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_secret": CLIENT_SECRET,
     "redirect_uris": [
-      "http://webreg2cal-jacksawolf.vercel.app//oauth2callback",
       "https://webreg2cal-jacksawolf.vercel.app/oauth2callback",
-      "http://localhost:5000/oauth2callback",
-      "https://localhost:5000/oauth2callback"
+      "https://localhost:5000/oauth2callback",
+      "https://127.0.0.1:5000/oauth2callback"
     ]
   }
 }, scopes=SCOPES, redirect_uri=url_for('oauth2callback', _external=True) 
@@ -153,10 +152,9 @@ def oauth2callback():
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_secret": CLIENT_SECRET,
     "redirect_uris": [
-      "http://webreg2cal-jacksawolf.vercel.app//oauth2callback",
       "https://webreg2cal-jacksawolf.vercel.app/oauth2callback",
-      "http://localhost:5000/oauth2callback",
-      "https://localhost:5000/oauth2callback"
+      "https://localhost:5000/oauth2callback",
+      "https://127.0.0.1:5000/oauth2callback"
     ]
   }
 }, scopes=SCOPES, redirect_uri=url_for('oauth2callback', _external=True) 
